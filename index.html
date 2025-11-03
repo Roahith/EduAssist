@@ -54,6 +54,37 @@ df-messenger {
   --df-messenger-minimized-chat-icon-color: #00bfff;
   z-index: 9998;
 }
+df-messenger::part(message-list) {
+  text-align: center !important;
+}
+df-messenger::part(bot-message) {
+  display: inline-block !important;
+  margin: 8px auto !important;
+  text-align: left !important;
+  border-radius: 18px !important;
+  box-shadow: 0 0 6px rgba(0,191,255,0.2);
+  background: #0d0d0d !important;
+}
+df-messenger::part(user-message) {
+  display: inline-block !important;
+  margin: 8px auto !important;
+  text-align: left !important;
+  border-radius: 18px !important;
+  box-shadow: 0 0 8px rgba(0,191,255,0.5);
+  background: linear-gradient(135deg,#007bff,#00bfff) !important;
+}
+df-messenger::part(suggestion-chip) {
+  display: inline-block !important;
+  text-align: center !important;
+  margin: 5px auto !important;
+}
+
+/* Smooth scrollbars */
+::-webkit-scrollbar {width:6px;}
+::-webkit-scrollbar-thumb {
+  background-color:#00bfff;
+  border-radius:10px;
+}
 </style>
 </head>
 <body>
