@@ -4,15 +4,19 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>EduAssist - Gedee Public School</title>
+
 <style>
+/* --- Background & Base --- */
 body {
   margin: 0;
-  background: radial-gradient(circle at center,#000 0%,#040404 60%,#080808 100%);
+  background: radial-gradient(circle at center, #000 0%, #040404 60%, #080808 100%);
   color: white;
-  font-family: 'Poppins',sans-serif;
+  font-family: 'Poppins', sans-serif;
   text-align: center;
   overflow: hidden;
 }
+
+/* --- Logo --- */
 .logo-container {
   margin-top: 60px;
   animation: glow 3s infinite alternate;
@@ -20,59 +24,152 @@ body {
 .logo-container img {
   width: 280px;
   border-radius: 12px;
-  box-shadow: 0 0 25px rgba(0,150,255,.7);
+  box-shadow: 0 0 25px rgba(0, 150, 255, 0.7);
 }
 @keyframes glow {
-  0%{filter:drop-shadow(0 0 10px #007bff);}
-  100%{filter:drop-shadow(0 0 25px #00bfff);}
-}
-h1 {
-  margin-top:35px;
-  font-size:5rem;
-  font-weight:700;
-  color:#00bfff;
-  letter-spacing:3px;
-  text-shadow:0 0 15px #00bfff,0 0 30px #00bfff;
-  animation:textGlow 3s infinite alternate;
-}
-@keyframes textGlow {
-  0%{text-shadow:0 0 10px #00bfff,0 0 20px #00bfff;}
-  100%{text-shadow:0 0 25px #00e5ff,0 0 45px #00e5ff;}
+  0% { filter: drop-shadow(0 0 10px #007bff); }
+  100% { filter: drop-shadow(0 0 25px #00bfff); }
 }
 
-/* These variables actually apply inside Dialogflow’s shadow DOM */
+/* --- Title --- */
+h1 {
+  margin-top: 35px;
+  font-size: 5rem;
+  font-weight: 700;
+  color: #00bfff;
+  letter-spacing: 3px;
+  text-shadow: 0 0 15px #00bfff, 0 0 30px #00bfff;
+  animation: textGlow 3s infinite alternate;
+}
+@keyframes textGlow {
+  0% { text-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff; }
+  100% { text-shadow: 0 0 25px #00e5ff, 0 0 45px #00e5ff; }
+}
+
+/* --- Chat Window --- */
 df-messenger {
-  --df-messenger-bot-message: linear-gradient(135deg,#007bff,#00bfff);
-  --df-messenger-user-message: #1f1f1f;
-  --df-messenger-font-color: #fff;
+  --df-messenger-bot-message: #101010;
+  --df-messenger-user-message: linear-gradient(135deg, #007bff, #00bfff);
+  --df-messenger-font-color: #ffffff;
   --df-messenger-send-icon: #00bfff;
   --df-messenger-chat-background-color: #0a0a0a;
-  --df-messenger-input-box-color: #1a1a1a;
-  --df-messenger-input-placeholder-font-color: #999;
+  --df-messenger-input-box-color: #111;
   --df-messenger-input-font-color: #fff;
+  --df-messenger-input-placeholder-font-color: #999;
   --df-messenger-button-titlebar-color: #007bff;
   --df-messenger-minimized-chat-icon-color: #00bfff;
-  position:fixed;
-  bottom:25px;
-  right:25px;
-  border-radius:18px;
-  box-shadow:0 0 30px rgba(0,191,255,.5);
-  overflow:hidden;
-  z-index:9998;
+  position: fixed;
+  bottom: 100px;
+  right: 40px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(0, 191, 255, 0.5);
+  z-index: 9998;
+  transform: scale(0);
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+df-messenger.open {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* --- Floating Chat Button --- */
+.chat-button {
+  position: fixed;
+  bottom: 30px;
+  right: 35px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #007bff, #00bfff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 25px rgba(0, 191, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 9999;
+}
+
+.chat-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 35px rgba(0, 191, 255, 0.7);
+}
+
+.chat-button img {
+  width: 38px;
+  height: 38px;
+}
+
+/* --- Floating Hint --- */
+.chat-hint {
+  position: fixed;
+  bottom: 45px;
+  right: 120px;
+  font-size: 17px;
+  color: #00bfff;
+  font-weight: 500;
+  text-shadow: 0 0 10px #00bfff;
+  animation: pulse 2s infinite;
+  cursor: pointer;
+  user-select: none;
+  z-index: 9999;
+}
+@keyframes pulse {
+  0% { opacity: 0.7; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-3px); }
+  100% { opacity: 0.7; transform: translateY(0); }
+}
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-thumb {
+  background-color: #00bfff;
+  border-radius: 10px;
 }
 </style>
 </head>
+
 <body>
   <div class="logo-container">
     <img src="assets/images/gdps_logo.png" alt="Gedee Public School Logo" />
   </div>
   <h1>EduAssist</h1>
 
+  <div class="chat-hint" id="chatHint">Click here 👉</div>
+  <div class="chat-button" id="chatButton">
+    <img src="https://cdn-icons-png.flaticon.com/128/3197/3197910.png" alt="Chat Icon">
+  </div>
+
   <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+
   <df-messenger
     chat-title="EduAssist"
     agent-id="52a62b5a-9ddd-4790-b213-1406008dd546"
     language-code="en">
   </df-messenger>
+
+  <script>
+    const chatButton = document.getElementById('chatButton');
+    const chatHint = document.getElementById('chatHint');
+    const messenger = document.querySelector('df-messenger');
+    let open = false;
+
+    const toggleChat = () => {
+      open = !open;
+      if (open) {
+        messenger.classList.add('open');
+        chatHint.style.display = 'none';
+      } else {
+        messenger.classList.remove('open');
+        chatHint.style.display = 'block';
+      }
+    };
+
+    chatButton.addEventListener('click', toggleChat);
+    chatHint.addEventListener('click', toggleChat);
+  </script>
 </body>
 </html>
