@@ -17,7 +17,6 @@
       font-family: 'Poppins', sans-serif;
       overflow: hidden;
     }
-
     .logo-container {
       display: flex;
       align-items: center;
@@ -29,18 +28,15 @@
       box-shadow: 0 0 40px rgba(0, 150, 255, 0.7);
       animation: glow 3s infinite alternate;
     }
-
     .logo-container img {
       width: 240px;
       height: auto;
       display: block;
     }
-
     @keyframes glow {
       0% { box-shadow: 0 0 20px rgba(0, 150, 255, 0.6); }
       100% { box-shadow: 0 0 40px rgba(0, 191, 255, 0.9); }
     }
-
     h1 {
       margin-top: 40px;
       font-size: 5rem;
@@ -50,12 +46,10 @@
       text-shadow: 0 0 15px #00bfff, 0 0 35px #00bfff;
       animation: textGlow 3s infinite alternate;
     }
-
     @keyframes textGlow {
       0% { text-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff; }
       100% { text-shadow: 0 0 25px #00e5ff, 0 0 45px #00e5ff; }
     }
-
     df-messenger {
       --df-messenger-bot-message: linear-gradient(135deg, #007bff, #00bfff);
       --df-messenger-user-message: #1f1f1f;
@@ -71,19 +65,9 @@
       border-radius: 22px;
       box-shadow: 0 0 25px rgba(0, 191, 255, 0.5);
       overflow: hidden;
-      transform: scale(0);
-      opacity: 0;
       transition: all 0.4s ease;
       z-index: 9998;
     }
-
-    df-messenger.open {
-      transform: scale(1);
-      opacity: 1;
-      bottom: 90px;
-      right: 25px;
-    }
-
     .chat-hint {
       position: fixed;
       bottom: 25px;
@@ -97,13 +81,11 @@
       user-select: none;
       z-index: 9999;
     }
-
     @keyframes pulse {
       0% { opacity: 0.7; transform: translateY(0); }
       50% { opacity: 1; transform: translateY(-3px); }
       100% { opacity: 0.7; transform: translateY(0); }
     }
-
     .chat-button {
       position: fixed;
       bottom: 20px;
@@ -122,23 +104,19 @@
       transition: all 0.2s ease;
       z-index: 9999;
     }
-
     .chat-button:hover {
       transform: scale(1.1);
       box-shadow: 0 0 35px rgba(0, 191, 255, 0.9);
     }
-
     .chat-button img {
       width: 34px;
       height: 34px;
       display: block;
       filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
     }
-
     ::-webkit-scrollbar {
       width: 6px;
     }
-
     ::-webkit-scrollbar-thumb {
       background-color: #00bfff;
       border-radius: 10px;
@@ -163,19 +141,15 @@
     const chatButton = document.getElementById('chatButton');
     const chatHint = document.getElementById('chatHint');
     const messenger = document.querySelector('df-messenger');
-    let open = false;
 
-    const toggleChat = () => {
-      open = !open;
-      if (open) {
-        messenger.classList.add('open');
-      } else {
-        messenger.classList.remove('open');
-      }
-    };
+    function openChat() {
+      const shadowRoot = messenger.shadowRoot;
+      const chatToggle = shadowRoot.querySelector('df-messenger-chat-toggle');
+      if (chatToggle) chatToggle.click();
+    }
 
-    chatButton.addEventListener('click', toggleChat);
-    chatHint.addEventListener('click', toggleChat);
+    chatButton.addEventListener('click', openChat);
+    chatHint.addEventListener('click', openChat);
   </script>
 </body>
 </html>
